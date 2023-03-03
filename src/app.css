@@ -18,26 +18,19 @@
     margin: 10px 0;
   }
 
-  @media (min-width: 640px) {
-    h1 {
-      font-size: 4em;
-    }
-    main {
-      max-width: 1140px;
-    }
-  }
 
-  .wrapper {
-    position: relative;
-    height: 450px;
-    margin-bottom: 45px;
+
+  /* .form-center {
+    display:flex;
+    justify-content: center;
   }
+   */
 
   .hidden {
     position: relative;
   }
 
-  button {
+  /* button {
     border: none;
     background-color: #ff3e00;
     padding: 16px 25px;
@@ -49,4 +42,4 @@
 
   button:hover {
     background-color: #a52a01;
-  }
+  } */

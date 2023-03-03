@@ -1,33 +1,38 @@
 <script>
-  import Typeform from "svelte-typeform-embed";
-  let typeformPopup;
+	import { createForm } from 'felte';
 
-  function openPopup() {
-    return typeformPopup.open();
-  }
+	import { Button } from 'spaper';
 
-  let value = 100;
+	import 'papercss/dist/paper.min.css';
+
+	// export let initialValues;
+	// export let onSubmit;
+	// export let onBack;
+
+	const { form, data } = createForm({
+		onSubmit: (values) => {
+			console.log(values);
+		}
+	});
 </script>
 
-
 <main>
-  <h1>sveil</h1>
-  <p>
-    The world's finest availability input platform 
-  </p>
-  
+	<h1>sveil</h1>
 
-  <div class="wrapper">
-    <Typeform url="https://u4sz0aw1y45.typeform.com/to/Gjun4Xv1" />
-  </div>
-
-  <div class="hidden">
-    <Typeform
-      url="https://u4sz0aw1y45.typeform.com/to/Gjun4Xv1"
-      bind:typeformPopup
-      popup
-      autoOpen={false} />
-  </div>
-
-  <button on:click={openPopup}>Click to open in popup mode</button>
+	<form class="w-full max-w-sm" use:form>
+		<p>What is your first and last name?</p>
+		<div class="flex items-center border-b border-teal-500 px-6 py-4">
+			<input type="text" placeholder="Jane Doe" aria-label="Full name" />
+			<Button type="secondary" class="flex-shrink-0 margin-left-small" nativeType="submit"
+				>Next</Button
+			>
+			<!-- <Button class="flex-shrink-0 ">Cancel</Button> -->
+		</div>
+	</form>
+	<!-- <form use:form>
+			<p>What is your first and last name?</p>
+			<input placeholder="Bob Dylan" type="text" name="name" />
+			<Button type="primary" nativeType="submit">Submit</Button>
+			
+		</form> -->
 </main>
