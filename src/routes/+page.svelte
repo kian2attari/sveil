@@ -1,38 +1,43 @@
 <script>
-	import { createForm } from 'felte';
-
-	import { Button } from 'spaper';
-
 	import 'papercss/dist/paper.min.css';
 
-	// export let initialValues;
-	// export let onSubmit;
-	// export let onBack;
+	import FormPage1 from './form-page-1.svelte';
+	import FormPage2 from './form-page-2.svelte';
 
-	const { form, data } = createForm({
-		onSubmit: (values) => {
-			console.log(values);
+	const pages = [FormPage1, FormPage2];
+
+	let page = 0;
+
+	let pagesState = [];
+
+	// Our handlers
+	function onSubmit(values) {
+		if (page === pages.length - 1) {
+			// On our final page we POST our data somewhere
+			return fetch('https://example.com/', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(pagesState)
+			}).then((response) => {
+				// We handle the response
+			});
+		} else {
+			// If we're not on the last page, store our data and increase a step
+			pagesState[page] = values;
+			pagesState = pagesState; // Triggering update
+			page += 1;
 		}
-	});
+	}
+
+	function onBack(values) {
+		if (page === 0) return;
+		pagesState[page] = values;
+		pagesState = pagesState; // Triggering update
+		page -= 1;
+	}
 </script>
 
 <main>
 	<h1>sveil</h1>
-
-	<form class="w-full max-w-sm" use:form>
-		<p>What is your first and last name?</p>
-		<div class="flex items-center border-b border-teal-500 px-6 py-4">
-			<input type="text" placeholder="Jane Doe" aria-label="Full name" />
-			<Button type="secondary" class="flex-shrink-0 margin-left-small" nativeType="submit"
-				>Next</Button
-			>
-			<!-- <Button class="flex-shrink-0 ">Cancel</Button> -->
-		</div>
-	</form>
-	<!-- <form use:form>
-			<p>What is your first and last name?</p>
-			<input placeholder="Bob Dylan" type="text" name="name" />
-			<Button type="primary" nativeType="submit">Submit</Button>
-			
-		</form> -->
+	<svelte:component this={pages[page]} {onSubmit} {onBack} initialValues={pagesState[page]} />
 </main>
