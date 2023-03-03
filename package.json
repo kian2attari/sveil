@@ -35,5 +35,10 @@
 		"vite": "^4.1.4",
 		"vitest": "^0.25.8"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@rollup/plugin-replace": "^5.0.2",
+		"felte": "^1.2.7",
+		"svelte-typeform-embed": "^0.4.1"
+	}
 }
