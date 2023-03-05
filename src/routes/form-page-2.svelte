@@ -1,26 +1,20 @@
-<script>
+<script lang="ts">
 	import { createForm } from 'felte';
 
 	import { Button } from 'spaper';
 
-	export let initialValues;
 	export let onSubmit;
-	export let onBack;
+	// Give a type to onback function
+	export let onBack: (data: any) => void;
 
 	const { form, data } = createForm({ onSubmit });
 </script>
 
-<form use:form>
-	<button type="button" on:click={() => onBack($data)}> Previous page </button>
-</form>
-
 <form class="w-full max-w-sm">
-	<p>Can you meet in person?</p>
-	<div class="flex items-center border-b border-teal-500 px-6 py-4">
-		<input type="text" placeholder="Jane Doe" aria-label="Full name" />
-		<Button type="secondary" class="flex-shrink-0 margin-left-small" nativeType="submit"
-			>Next</Button
-		>
-		<!-- <Button class="flex-shrink-0 ">Cancel</Button> -->
-	</div>
+	<p>
+		Mark your availability on the calendar below. Single click to edit the location/time zone.
+		Double click on a block to delete it.
+	</p>
+
+	<Button nativeType="button" on:click={() => onBack($data)}>Back</Button>
 </form>
