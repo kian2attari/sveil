@@ -40,7 +40,6 @@
 		"@rollup/plugin-replace": "^5.0.2",
 		"felte": "^1.2.7",
 		"papercss": "^1.9.1",
-		"spaper": "^1.0.0",
-		"svelte-typeform-embed": "^0.4.1"
+		"spaper": "^1.0.0"
 	}
 }
