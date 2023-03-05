@@ -1,11 +1,13 @@
-<script lang="ts">
+<script>
 	import { createForm } from 'felte';
 
 	import { Button } from 'spaper';
 
+	import AvailabilityScheduler from './availability-scheduler.svelte';
+
 	export let onSubmit;
 	// Give a type to onback function
-	export let onBack: (data: any) => void;
+	export let onBack;
 
 	const { form, data } = createForm({ onSubmit });
 </script>
@@ -17,5 +19,6 @@
 			Double click on a block to delete it.
 		</p>
 	</div>
+
 	<Button nativeType="button" on:click={() => onBack($data)}>Back</Button>
 </form>
