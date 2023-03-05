@@ -1,5 +1,6 @@
 <script>
 	import 'papercss/dist/paper.min.css';
+	import 'tippy.js/dist/tippy.css';
 
 	import FormPage1 from './form-page-1.svelte';
 	import FormPage2 from './form-page-2.svelte';
@@ -26,6 +27,7 @@
 			pagesState[page] = values;
 			pagesState = pagesState; // Triggering update
 			page += 1;
+			console.log('Email is: ' + values.email);
 		}
 	}
 
