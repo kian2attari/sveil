@@ -59,7 +59,7 @@
 
 <main class="text-center">
 	{#if page === 0}
-		<h1 class="uppercase text-red-500">sveil</h1>
+		<h1 class="uppercase text-red-500">sveilability</h1>
 	{/if}
 	<svelte:component this={pages[page]} {onSubmit} {onBack} />
 	<!-- <svelte:component this={pages[page]} {onSubmit} {onBack} initialValues={pagesState[page]} /> -->
