@@ -30,6 +30,10 @@
 		// slotMaxTime: '24:00:00',
 		slotDuration: '00:15:00',
 		editable: true,
+		theme: (theme) => {
+			theme.today = 'ec-day';
+			return theme;
+		},
 		headerToolbar: { start: '', center: '', end: '' },
 		allDaySlot: false,
 		dayHeaderFormat: { weekday: 'short' },
