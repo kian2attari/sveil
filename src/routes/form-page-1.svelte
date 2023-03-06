@@ -3,10 +3,8 @@
 	import reporter from '@felte/reporter-tippy';
 	import { Button } from 'spaper';
 	import { onMount } from 'svelte';
-	import { text } from 'svelte/internal';
 
 	const emailDomains = ['@college.harvard.edu', '@harvard.edu'];
-	let originalDomains = [];
 
 	export let onSubmit;
 
@@ -17,6 +15,7 @@
 	});
 
 	let dropdownList = [];
+
 	let highlightedIndex = 0;
 
 	function validateEmailForm(emailFormEntry) {
@@ -28,17 +27,19 @@
 	}
 
 	function suggestDomains(value) {
+		highlightedIndex = 0;
 		if (value.includes('@')) {
-			originalDomains = emailDomains.slice(); // make a copy of the original domains
-			dropdownList = emailDomains.filter((domain) => domain.startsWith(value.split('@')[1]));
-			highlightedIndex = 0;
-			if (dropdownList.length === 0) {
-				dropdownList = originalDomains; // if no matches, show all the original domains again
+			let candidates = emailDomains.filter((domain) =>
+				domain.startsWith('@' + value.split('@')[1])
+			);
+
+			if (candidates.length != 0) {
+				dropdownList = candidates; // if no matches, show all the original domains again
 			}
-		} else {
-			dropdownList = [];
-			highlightedIndex = 0;
+
+			return;
 		}
+		dropdownList = [];
 	}
 
 	function addDomain(domain) {
