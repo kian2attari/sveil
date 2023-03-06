@@ -31,6 +31,11 @@
             // info.eventContent = ""
             // info.titleHTML = "<input bind:this.eventContent use:clickOutside on:click_outside={updateEventAfterUnselect()}></input>"
             ec.addEvent(info)
+
+            // update the events in mongodb here
+            
+
+            
             // console.log(info)
 
             // prompt the user to enter a title and update the event
@@ -47,9 +52,18 @@
 
         },
         eventClick: function (info) {
-            info.el.focus()
-            info.event.title = prompt('Event Title:');
-            ec.updateEvent(info)
+            console.log(info)
+            // console.log(ec.getEvents())
+            // info.event.title = "def";
+            // ec.addEvent(info.event)
+            // ec.removeEventById(info.event.id)
+            let ev = ec.getEvents()
+            console.log(ev)
+            console.log(ev.length)
+            // ec.updateEvent(info)
+            // console.log(ec.getEvents())
+            
+            
             // console.log(info)
             // your event click handler
             // title = info.event.title
