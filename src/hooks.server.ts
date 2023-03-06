@@ -1,8 +1,8 @@
-import { start_db } from "$db/mongo";
+// import { start_db } from "$db/mongo";
 
-start_db().then(() => {
-    console.log('MongoDB connected!')
-}).catch(e => {
-    console.error('MongoDB connection failed!', e)
-})
+// start_db().then(() => {
+//     console.log('MongoDB connected!')
+// }).catch(e => {
+//     console.error('MongoDB connection failed!', e)
+// })
 

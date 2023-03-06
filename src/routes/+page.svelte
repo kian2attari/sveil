@@ -1,6 +1,7 @@
-<script>
+<script lang="ts">
 	import 'papercss/dist/paper.min.css';
 	import 'tippy.js/dist/tippy.css';
+
 
 	import FormPage1 from './form-page-1.svelte';
 	import FormPage2 from './form-page-2.svelte';

@@ -19,7 +19,8 @@ const config = {
 			$routes: './src/routes',
 			$types: './src/types',
 			$utils: './src/utils',
-			$db: './src/db'
+			$db: './src/db',
+			$server: './src/server',
 		}
 	}
 };

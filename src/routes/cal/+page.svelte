@@ -4,8 +4,18 @@
     import Interaction from '@event-calendar/interaction';
     import '@event-calendar/core/index.css';
 	import { clickOutside } from '../../helpers/clickOutside';
+    
+    import type { PageData } from './$types';
+
+    // export let data: PageData;
+
+    // $: ( { dbEvents } = data) 
+
+    // console.log(dbEvents)
+
     let title = ""
     let ec;
+
 
     function updateEventAfterUnselect(this) {
         // update the event with new content on unselect
@@ -16,9 +26,10 @@
     let options = {
         view: 'timeGridWeek',
         selectable: true,
+        slotMin: '00:09:00',
+        slotMax: '00:19:00',
         slotDuration: '00:15:00',
         editable: true,
-        height: 'fit-content(50vh) !important',
         // eventDurationEditable: true,
         // eventStartEditable: true,
         // unselectAuto: true,
@@ -33,7 +44,7 @@
             ec.addEvent(info)
 
             // update the events in mongodb here
-            
+
 
             
             // console.log(info)
@@ -57,7 +68,10 @@
             // info.event.title = "def";
             // ec.addEvent(info.event)
             // ec.removeEventById(info.event.id)
-            let ev = ec.getEvents()
+
+
+            let ev = ec.getEvents() // <-- this is the array of events that we need to update in mongodb, probably on create, if possible?
+
             console.log(ev)
             console.log(ev.length)
             // ec.updateEvent(info)
@@ -73,7 +87,7 @@
         unselect: function (info) {
             // your unselect handler
 
-            // update the event with new content on unselect
+            // update the event with new content on unselect??
             // ec.updateEvent(info)
             console.log(info)
 
