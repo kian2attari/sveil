@@ -1,3 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+  main {
+    padding: 1em;
+    max-width: 320px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  h1 {
+    color: #ff3e00;
+    text-transform: uppercase;
+    font-size: 2em;
+    font-weight: 100;
+    margin: 10px 0;
+  }
+
+
+
+  /* .form-center {
+    display:flex;
+    justify-content: center;
+  }
+   */
+
+  .hidden {
+    position: relative;
+  }
+
+  /* button {
+    border: none;
+    background-color: #ff3e00;
+    padding: 16px 25px;
+    border-radius: 4px;
+    color: white;
+    display: block;
+    margin: 0 auto;
+  }
+
+  button:hover {
+    background-color: #a52a01;
+  } */

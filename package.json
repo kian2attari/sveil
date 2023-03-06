@@ -40,5 +40,13 @@
 		"vite": "^4.1.4",
 		"vitest": "^0.25.8"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@felte/reporter-tippy": "^1.1.5",
+		"@rollup/plugin-replace": "^5.0.2",
+		"felte": "^1.2.7",
+		"papercss": "^1.9.1",
+		"spaper": "^1.0.0",
+		"tippy.js": "^6.3.7"
+	}
 }
