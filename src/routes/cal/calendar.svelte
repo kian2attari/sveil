@@ -3,6 +3,7 @@
 	import TimeGrid from '@event-calendar/time-grid';
 	import Interaction from '@event-calendar/interaction';
 	import '@event-calendar/core/index.css';
+	import RangeSlider from 'svelte-range-slider-pips';
 	import { clickOutside } from '../../helpers/clickOutside';
 
 	import type { PageData } from './$types';
@@ -25,8 +26,8 @@
 	let options = {
 		view: 'timeGridWeek',
 		selectable: true,
-		slotMin: '00:09:00',
-		slotMax: '00:19:00',
+		// slotMinTime: '00:00:00',
+		// slotMaxTime: '24:00:00',
 		slotDuration: '00:15:00',
 		editable: true,
 		headerToolbar: { start: '', center: '', end: '' },
@@ -95,6 +96,15 @@
 			// your event resize handler
 		}
 	};
+
+	// Array of all the hours in a day as strings
+
+	const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0') + ':00');
+	hours.push('24:00');
+
+	let values = [0, 24];
+
+	console.log(hours);
 </script>
 
 <!-- <input bind:value={title} type="text" class="
@@ -106,8 +116,25 @@
                     focus:ring-0 focus:border-black
                   " placeholder="">
 <h1>Hello {title}!</h1> -->
-
-<Calendar bind:this={ec} {plugins} {options} />
+<div>
+	<RangeSlider
+		range
+		bind:values
+		float
+		first="label"
+		last="label"
+		pips
+		formatter={(v) => hours[v]}
+		min={0}
+		max={24}
+		on:change={() => {
+			ec.setOption('slotMinTime', hours[values[0]]);
+			ec.setOption('slotMaxTime', hours[values[1]]);
+		}}
+	/>
+	<p>You can also use the above time slider to limit the range of hours displayed!</p>
+	<Calendar bind:this={ec} {plugins} {options} />
+</div>
 
 <!-- <div class="grid grid-cols-2">
     <div>
