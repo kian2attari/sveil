@@ -58,7 +58,9 @@
 </script>
 
 <main class="text-center">
-	<h1 class="uppercase text-red-500">sveil</h1>
+	{#if page === 0}
+		<h1 class="uppercase text-red-500">sveil</h1>
+	{/if}
 	<svelte:component this={pages[page]} {onSubmit} {onBack} />
 	<!-- <svelte:component this={pages[page]} {onSubmit} {onBack} initialValues={pagesState[page]} /> -->
 </main>

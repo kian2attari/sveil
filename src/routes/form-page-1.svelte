@@ -7,6 +7,10 @@
 	const emailDomains = ['@college.harvard.edu', '@harvard.edu'];
 
 	export let onSubmit;
+
+	// To silence the unused parameter warning...svelte hasnt addressed this yet
+	export let onBack;
+
 	let startTime: number;
 
 	const { form, data, setData, setFields } = createForm({
