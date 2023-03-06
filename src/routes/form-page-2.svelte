@@ -18,8 +18,8 @@
 	</div>
 	<div class="flex items-center px-6 py-4">
 		<p class="border-b ">
-			Mark your availability on the calendar below. Single click to edit the location/time zone.
-			Double click on a block to delete it.
+			Drag to mark your availability on the calendar below. Single click to edit the location/time
+			zone. Double click on a block to delete it.
 		</p>
 	</div>
 	<Calendar />
