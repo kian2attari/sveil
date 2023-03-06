@@ -19,9 +19,20 @@
 		if (page === pages.length - 1) {
 			let data = Object.assign({}, ...pagesState, values);
 
+			console.log(data);
+
 			console.log('Form submitted by: ' + data.email);
 			// log completion time in seconds
-			console.log('Completion time: ' + (Date.now() - startTime) / 1000 + ' seconds');
+			console.log('Completion time: ' + (Date.now() - data.startTime) / 1000 + ' seconds');
+
+			// TODO: remove this alert
+			alert(
+				'Form submitted by: ' +
+					data.email +
+					' in ' +
+					(Date.now() - data.startTime) / 1000 +
+					' seconds'
+			);
 			// On our final page we POST our data somewhere
 			return fetch('https://example.com/', {
 				method: 'POST',
@@ -35,7 +46,6 @@
 			pagesState[page] = values;
 			pagesState = pagesState; // Triggering update
 			page += 1;
-			console.log('Email is: ' + values.email);
 		}
 	}
 
@@ -49,5 +59,6 @@
 
 <main class="text-center">
 	<h1 class="uppercase text-red-500">sveil</h1>
-	<svelte:component this={pages[page]} {onSubmit} {onBack} initialValues={pagesState[page]} />
+	<svelte:component this={pages[page]} {onSubmit} {onBack} />
+	<!-- <svelte:component this={pages[page]} {onSubmit} {onBack} initialValues={pagesState[page]} /> -->
 </main>

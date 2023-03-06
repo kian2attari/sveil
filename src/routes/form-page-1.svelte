@@ -7,9 +7,9 @@
 	const emailDomains = ['@college.harvard.edu', '@harvard.edu'];
 
 	export let onSubmit;
-	export let startTime: number;
+	let startTime: number;
 
-	const { form, data } = createForm({
+	const { form, data, setData, setFields } = createForm({
 		onSubmit,
 		validate: validateEmailForm,
 		extend: reporter({ tippyProps: { placement: 'right' } })
@@ -23,6 +23,7 @@
 		// We want to measure how long it takes for a user to complete the form, so we'll store the time when they start
 		if (!startTime) {
 			startTime = Date.now();
+			setData(($data) => ({ ...$data, startTime }));
 			console.log('Timer started: ' + startTime);
 			return;
 		}
@@ -53,7 +54,8 @@
 	}
 
 	function addDomain(domain) {
-		data.email = data.email.split('@')[0] + domain;
+		// set the email to the selected domain
+		setFields('email', data.email.split('@')[0] + domain, true);
 		dropdownList = [];
 		highlightedIndex = 0;
 	}
