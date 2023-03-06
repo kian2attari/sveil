@@ -6,6 +6,7 @@
 	import { text } from 'svelte/internal';
 
 	const emailDomains = ['@college.harvard.edu', '@harvard.edu'];
+	let originalDomains = [];
 
 	export let onSubmit;
 
@@ -28,8 +29,12 @@
 
 	function suggestDomains(value) {
 		if (value.includes('@')) {
+			originalDomains = emailDomains.slice(); // make a copy of the original domains
 			dropdownList = emailDomains.filter((domain) => domain.startsWith(value.split('@')[1]));
 			highlightedIndex = 0;
+			if (dropdownList.length === 0) {
+				dropdownList = originalDomains; // if no matches, show all the original domains again
+			}
 		} else {
 			dropdownList = [];
 			highlightedIndex = 0;
@@ -98,7 +103,7 @@
 		{/if}
 	</div>
 
-	<Button type="secondary" class="flex-shrink-0 margin-left-small" nativeType="submit">Next</Button>
+	<Button type="secondary" class="max-w-min" nativeType="submit">Next</Button>
 </form>
 
 <style>
