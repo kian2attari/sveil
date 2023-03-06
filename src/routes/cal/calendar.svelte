@@ -14,7 +14,6 @@
 
 	// console.log(dbEvents)
 
-	let title = '';
 	let ec;
 
 	function updateEventAfterUnselect(this) {
@@ -134,8 +133,6 @@
 	hours.push('24:00');
 
 	let values = [0, 24];
-
-	console.log(hours);
 </script>
 
 <!-- <input bind:value={title} type="text" class="

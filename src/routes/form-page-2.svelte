@@ -8,6 +8,8 @@
 	// Give a type to onback function
 	export let onBack;
 
+	// export let page;
+
 	const { form, data } = createForm({ onSubmit });
 </script>
 
