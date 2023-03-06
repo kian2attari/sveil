@@ -42,7 +42,7 @@
 	}
 </script>
 
-<main>
-	<h1>sveil</h1>
+<main class="text-center">
+	<h1 class="uppercase text-red-500">sveil</h1>
 	<svelte:component this={pages[page]} {onSubmit} {onBack} initialValues={pagesState[page]} />
 </main>
