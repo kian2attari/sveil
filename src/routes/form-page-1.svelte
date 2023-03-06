@@ -16,6 +16,7 @@
 	});
 
 	let dropdownList = [];
+	let highlightedIndex = 0;
 
 	function validateEmailForm(emailFormEntry) {
 		if (!emailFormEntry.email || !emailFormEntry.email.includes('@')) {
@@ -28,19 +29,39 @@
 	function suggestDomains(value) {
 		if (value.includes('@')) {
 			dropdownList = emailDomains.filter((domain) => domain.startsWith(value.split('@')[1]));
+			highlightedIndex = 0;
 		} else {
 			dropdownList = [];
+			highlightedIndex = 0;
 		}
 	}
 
 	function addDomain(domain) {
 		data.email = data.email.split('@')[0] + domain;
 		dropdownList = [];
+		highlightedIndex = 0;
 	}
+
+	const handleKeyDown = (event) => {
+		if (event.key === 'ArrowUp' && highlightedIndex > 0) {
+			highlightedIndex--;
+			event.preventDefault();
+		} else if (event.key === 'ArrowDown' && highlightedIndex < dropdownList.length - 1) {
+			highlightedIndex++;
+			event.preventDefault();
+		} else if (event.key === 'Tab' || event.key === ' ') {
+			event.preventDefault();
+			addDomain(dropdownList[highlightedIndex]);
+		} else if (event.key === 'Enter' && dropdownList.length > 0) {
+			event.preventDefault();
+			addDomain(dropdownList[highlightedIndex]);
+		}
+	};
 
 	const handleOutsideClick = (event) => {
 		if (!event.target.closest('.email-suggestions')) {
 			dropdownList = [];
+			highlightedIndex = 0;
 		}
 	};
 
@@ -60,12 +81,18 @@
 			placeholder="jdoe@college.harvard.edu"
 			aria-label="Email"
 			on:input={(event) => suggestDomains(event.target.value)}
+			on:keydown={handleKeyDown}
 			bind:value={data.email}
 		/>
 		{#if dropdownList.length > 0}
 			<ul class="email-suggestions">
-				{#each dropdownList as domain}
-					<li on:click={() => addDomain(domain)}>{data.email.split('@')[0] + domain}</li>
+				{#each dropdownList as domain, index}
+					<li
+						class={index === highlightedIndex ? 'highlighted' : ''}
+						on:click={() => addDomain(domain)}
+					>
+						{data.email.split('@')[0] + domain}
+					</li>
 				{/each}
 			</ul>
 		{/if}
@@ -82,16 +109,25 @@
 		max-height: 200px;
 		overflow-y: scroll;
 		background-color: #fff;
-		border-radius: 5px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		border: 1px solid #ccc;
+		border-radius: 0.25rem;
+		padding: 0.5rem;
+		margin-top: 0.5rem;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	}
 
 	.email-suggestions li {
-		padding: 8px;
+		padding: 0.25rem 0.5rem;
 		cursor: pointer;
 	}
 
-	.email-suggestions li:hover {
-		background-color: #eee;
+	.email-suggestions li.highlighted {
+		background-color: #f2f2f2;
+	}
+
+	.border-b {
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
 	}
 </style>
