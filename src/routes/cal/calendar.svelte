@@ -46,6 +46,11 @@
 		select: function (info) {
 			// your select handler
 			info.title = prompt('What will your location be for this slot?');
+
+			// TODO: Check that the added event does not overlap with any other events
+			// If it does, then alert the user and do not add the event
+			// If it does not, then add the event or potentially merge the events
+
 			// info.eventContent = ""
 			// info.titleHTML = "<input bind:this.eventContent use:clickOutside on:click_outside={updateEventAfterUnselect()}></input>"
 			ec.addEvent(info);
@@ -66,8 +71,30 @@
 			//     });
 			// }
 		},
+		// The eventContent should note the duration, location, and timezone, along with a delete button
+
+		eventContent: function (info) {
+			return info.event.display === 'auto'
+				? {
+						html:
+							'<div class="ec-event-time">' +
+							info.timeText +
+							'</div>' +
+							'<button>Delete</button>' +
+							'<div class="ec-event-title">' +
+							'<b>Location:</b> ' +
+							info.event.title +
+							'</div>'
+				  }
+				: '';
+		},
 		eventClick: function (info) {
-			console.log(info);
+			if (info.event.display === 'auto') {
+				let btn = info.el.querySelector('button');
+				if (info.jsEvent.target === btn) {
+					ec.removeEventById(info.event.id);
+				}
+			}
 			// console.log(ec.getEvents())
 			// info.event.title = "def";
 			// ec.addEvent(info.event)
@@ -76,7 +103,7 @@
 			let ev = ec.getEvents(); // <-- this is the array of events that we need to update in mongodb, probably on create, if possible?
 
 			console.log(ev);
-			console.log(ev.length);
+
 			// ec.updateEvent(info)
 			// console.log(ec.getEvents())
 
@@ -85,20 +112,20 @@
 			// title = info.event.title
 			// info.el.focus()
 			// info.event.eventContent = info.event.eventContent
-		},
-		unselect: function (info) {
-			// your unselect handler
-
-			// update the event with new content on unselect??
-			// ec.updateEvent(info)
-			console.log(info);
-		},
-		eventDrop: function (info) {
-			// your event drop handler
-		},
-		eventResize: function (info) {
-			// your event resize handler
 		}
+		// unselect: function (info) {
+		// 	// your unselect handler
+
+		// 	// update the event with new content on unselect??
+		// 	// ec.updateEvent(info)
+		// 	console.log(info);
+		// },
+		// eventDrop: function (info) {
+		// 	// your event drop handler
+		// },
+		// eventResize: function (info) {
+		// 	// your event resize handler
+		// }
 	};
 
 	// Array of all the hours in a day as strings
