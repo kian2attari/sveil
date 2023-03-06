@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { createForm } from 'felte';
 	import reporter from '@felte/reporter-tippy';
 	import { Button } from 'spaper';
@@ -7,6 +7,7 @@
 	const emailDomains = ['@college.harvard.edu', '@harvard.edu'];
 
 	export let onSubmit;
+	export let startTime: number;
 
 	const { form, data } = createForm({
 		onSubmit,
@@ -17,6 +18,16 @@
 	let dropdownList = [];
 
 	let highlightedIndex = 0;
+
+	function startTimerOnFirstFocus() {
+		// We want to measure how long it takes for a user to complete the form, so we'll store the time when they start
+		if (!startTime) {
+			startTime = Date.now();
+			console.log('Timer started: ' + startTime);
+			return;
+		}
+		console.log('Not the first click. Timer was already started: ' + startTime);
+	}
 
 	function validateEmailForm(emailFormEntry) {
 		if (!emailFormEntry.email || !emailFormEntry.email.includes('@')) {
@@ -88,6 +99,7 @@
 			aria-label="Email"
 			on:input={(event) => suggestDomains(event.target.value)}
 			on:keydown={handleKeyDown}
+			on:focus={() => startTimerOnFirstFocus()}
 			bind:value={data.email}
 		/>
 		{#if dropdownList.length > 0}

@@ -2,13 +2,15 @@
 	import 'papercss/dist/paper.min.css';
 	import 'tippy.js/dist/tippy.css';
 
-
 	import FormPage1 from './form-page-1.svelte';
 	import FormPage2 from './form-page-2.svelte';
 
 	const pages = [FormPage1, FormPage2];
 
 	let page = 0;
+
+	// We want to measure how long it takes for a user to complete the form, so we'll store the time when they start
+	let startTime: number;
 
 	let pagesState = [];
 
