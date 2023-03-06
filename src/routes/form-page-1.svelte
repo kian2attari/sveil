@@ -46,9 +46,8 @@
 
 			if (candidates.length != 0) {
 				dropdownList = candidates; // if no matches, show all the original domains again
+				return;
 			}
-
-			return;
 		}
 		dropdownList = [];
 	}

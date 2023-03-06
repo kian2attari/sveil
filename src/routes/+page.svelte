@@ -17,6 +17,11 @@
 	// Our handlers
 	function onSubmit(values) {
 		if (page === pages.length - 1) {
+			let data = Object.assign({}, ...pagesState, values);
+
+			console.log('Form submitted by: ' + data.email);
+			// log completion time in seconds
+			console.log('Completion time: ' + (Date.now() - startTime) / 1000 + ' seconds');
 			// On our final page we POST our data somewhere
 			return fetch('https://example.com/', {
 				method: 'POST',

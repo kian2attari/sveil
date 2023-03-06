@@ -10,7 +10,7 @@
 	const { form, data } = createForm({ onSubmit });
 </script>
 
-<form class="w-full">
+<form use:form class="w-full">
 	<div class="flex w-full justify-around">
 		<Button type="warning" nativeType="button" on:click={() => onBack($data)}>Back</Button>
 		<Button type="success" nativeType="submit">Submit</Button>
