@@ -3,8 +3,6 @@
 
 	import { Button } from 'spaper';
 
-	import AvailabilityScheduler from './availability-scheduler.svelte';
-
 	export let onSubmit;
 	// Give a type to onback function
 	export let onBack;
