@@ -4,9 +4,6 @@
 	import Interaction from '@event-calendar/interaction';
 	import '@event-calendar/core/index.css';
 	import RangeSlider from 'svelte-range-slider-pips';
-	import { clickOutside } from '../../helpers/clickOutside';
-
-	import type { PageData } from './$types';
 
 	// export let data: PageData;
 
@@ -14,7 +11,6 @@
 
 	// console.log(dbEvents)
 
-	let title = '';
 	let ec;
 
 	function updateEventAfterUnselect(this) {
@@ -26,8 +22,8 @@
 	let options = {
 		view: 'timeGridWeek',
 		selectable: true,
-		// slotMinTime: '00:00:00',
-		// slotMaxTime: '24:00:00',
+		slotMinTime: '07:00:00',
+		slotMaxTime: '23:00:00',
 		slotDuration: '00:15:00',
 		editable: true,
 		theme: (theme) => {
@@ -80,7 +76,7 @@
 							'<div class="ec-event-time">' +
 							info.timeText +
 							'</div>' +
-							'<button>Delete</button>' +
+							'<Button class="bg-red-50" >x</Button>' +
 							'<div class="ec-event-title">' +
 							'<b>Location:</b> ' +
 							info.event.title +
@@ -118,8 +114,11 @@
 
 		// 	// update the event with new content on unselect??
 		// 	// ec.updateEvent(info)
-		// 	console.log(info);
-		// },
+		// 	// console.log(info);
+		// 	let ev = ec.getEvents(); // <-- this is the array of events that we need to update in mongodb, probably on create, if possible?
+
+		// 	console.log(ev);
+		// }
 		// eventDrop: function (info) {
 		// 	// your event drop handler
 		// },
@@ -128,14 +127,22 @@
 		// }
 	};
 
-	// Array of all the hours in a day as strings
+	// Array of all the hours in a day as strings in 12 hour (ie. 1am,2am,3am) format
+	const hours = Array.from(
+		{ length: 24 },
+		(_, i) => (i % 12 || 12).toString() + ':00' + (i < 12 ? 'am' : 'pm')
+	);
 
-	const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0') + ':00');
-	hours.push('24:00');
-
-	let values = [0, 24];
+	hours.push('11:59pm');
 
 	console.log(hours);
+
+	// Similar to hours but with 24 hour format (ie. 01:00, 02:00, 03:00)
+	const hoursFull = Array.from({ length: 24 }, (_, i) => (i < 10 ? '0' + i : i).toString() + ':00');
+
+	hoursFull.push('24:00');
+
+	let values = [7, 23];
 </script>
 
 <!-- <input bind:value={title} type="text" class="
@@ -159,8 +166,8 @@
 		min={0}
 		max={24}
 		on:change={() => {
-			ec.setOption('slotMinTime', hours[values[0]]);
-			ec.setOption('slotMaxTime', hours[values[1]]);
+			ec.setOption('slotMinTime', hoursFull[values[0]]);
+			ec.setOption('slotMaxTime', hoursFull[values[1]]);
 		}}
 	/>
 	<p>You can also use the above time slider to limit the range of hours displayed!</p>

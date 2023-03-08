@@ -24,23 +24,19 @@
 			console.log('Form submitted by: ' + data.email);
 			// log completion time in seconds
 			console.log('Completion time: ' + (Date.now() - data.startTime) / 1000 + ' seconds');
+			console.log(JSON.stringify(pagesState));
+			// Hit the back button once the submission is triggered
+			page = 0;
+			startTime = 0;
+			pagesState = [];
 
-			// TODO: remove this alert
-			alert(
-				'Form submitted by: ' +
-					data.email +
-					' in ' +
-					(Date.now() - data.startTime) / 1000 +
-					' seconds'
-			);
-			// On our final page we POST our data somewhere
-			return fetch('https://example.com/', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(pagesState)
-			}).then((response) => {
-				// We handle the response
-			});
+			// return fetch('https://example.com/', {
+			// 	method: 'POST',
+			// 	headers: { 'Content-Type': 'application/json' },
+			// 	body: JSON.stringify(pagesState)
+			// }).then((response) => {
+			// 	// We handle the response
+			// });
 		} else {
 			// If we're not on the last page, store our data and increase a step
 			pagesState[page] = values;
