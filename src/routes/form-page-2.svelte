@@ -1,4 +1,5 @@
 <script>
+	import Calendar from './cal/calendar.svelte';
 	import { createForm } from 'felte';
 
 	import { Button } from 'spaper';
@@ -7,16 +8,18 @@
 	// Give a type to onback function
 	export let onBack;
 
+	// export let page;
+
 	const { form, data } = createForm({ onSubmit });
 </script>
 
-<form class="w-full max-w-sm">
-	<div class="flex items-center px-6 py-4">
-		<p class="border-b">
-			Mark your availability on the calendar below. Single click to edit the location/time zone.
-			Double click on a block to delete it.
-		</p>
+<form use:form class="w-full my-5">
+	<div class="flex w-full justify-around">
+		<Button type="warning" nativeType="button" on:click={() => onBack($data)}>Back</Button>
+		<Button type="success" nativeType="submit">Submit</Button>
 	</div>
-
-	<Button nativeType="button" on:click={() => onBack($data)}>Back</Button>
+	<div class=" items-center px-6 pt-4">
+		<p class="border-t py-3">Drag to mark your availability on the calendar below!</p>
+	</div>
+	<Calendar />
 </form>

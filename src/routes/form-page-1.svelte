@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { createForm } from 'felte';
 	import reporter from '@felte/reporter-tippy';
 	import { Button } from 'spaper';
@@ -8,7 +8,12 @@
 
 	export let onSubmit;
 
-	const { form, data } = createForm({
+	// To silence the unused parameter warning...svelte hasnt addressed this yet
+	export let onBack;
+
+	let startTime: number;
+
+	const { form, data, setData, setFields } = createForm({
 		onSubmit,
 		validate: validateEmailForm,
 		extend: reporter({ tippyProps: { placement: 'right' } })
@@ -17,6 +22,17 @@
 	let dropdownList = [];
 
 	let highlightedIndex = 0;
+
+	function startTimerOnFirstFocus() {
+		// We want to measure how long it takes for a user to complete the form, so we'll store the time when they start
+		if (!startTime) {
+			startTime = Date.now();
+			setData(($data) => ({ ...$data, startTime }));
+			console.log('Timer started: ' + startTime);
+			return;
+		}
+		console.log('Not the first click. Timer was already started: ' + startTime);
+	}
 
 	function validateEmailForm(emailFormEntry) {
 		if (!emailFormEntry.email || !emailFormEntry.email.includes('@')) {
@@ -35,15 +51,15 @@
 
 			if (candidates.length != 0) {
 				dropdownList = candidates; // if no matches, show all the original domains again
+				return;
 			}
-
-			return;
 		}
 		dropdownList = [];
 	}
 
 	function addDomain(domain) {
-		data.email = data.email.split('@')[0] + domain;
+		// set the email to the selected domain
+		setFields('email', data.email.split('@')[0] + domain, true);
 		dropdownList = [];
 		highlightedIndex = 0;
 	}
@@ -88,6 +104,7 @@
 			aria-label="Email"
 			on:input={(event) => suggestDomains(event.target.value)}
 			on:keydown={handleKeyDown}
+			on:focus={() => startTimerOnFirstFocus()}
 			bind:value={data.email}
 		/>
 		{#if dropdownList.length > 0}
