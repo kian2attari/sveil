@@ -5,25 +5,16 @@
 	import '@event-calendar/core/index.css';
 	import RangeSlider from 'svelte-range-slider-pips';
 
-	// export let data: PageData;
-
-	// $: ( { dbEvents } = data)
-
-	// console.log(dbEvents)
-
 	let ec;
 
-	function updateEventAfterUnselect(this) {
-		// update the event with new content on unselect
-		ec.updateEvent(this);
-	}
+	export let isFree: boolean;
 
 	let plugins = [Interaction, TimeGrid];
 	let options = {
 		view: 'timeGridWeek',
 		selectable: true,
-		slotMinTime: '07:00:00',
-		slotMaxTime: '23:00:00',
+		slotMinTime: '08:00:00',
+		slotMaxTime: '17:00:00',
 		slotDuration: '00:15:00',
 		editable: true,
 		theme: (theme) => {
@@ -33,98 +24,56 @@
 		headerToolbar: { start: '', center: '', end: '' },
 		allDaySlot: false,
 		dayHeaderFormat: { weekday: 'short' },
-		// eventDurationEditable: true,
-		// eventStartEditable: true,
-		// unselectAuto: true,
+
 		events: [
 			// your list of events
 		],
 		select: function (info) {
-			// your select handler
+			// #TimeBlock #Location
 			info.title = prompt('What will your location be for this slot?');
 
-			// TODO: Check that the added event does not overlap with any other events
-			// If it does, then alert the user and do not add the event
-			// If it does not, then add the event or potentially merge the events
+			// Select background color based on the isFree exported variable. Red if busy and green if not busy
+			// #TimeBlock #Free/Busy Block
+			info.backgroundColor = isFree ? '#54AD56' : '#bd5757';
 
+			// console.log(info.event.backgroundColor);
 			// info.eventContent = ""
 			// info.titleHTML = "<input bind:this.eventContent use:clickOutside on:click_outside={updateEventAfterUnselect()}></input>"
 			ec.addEvent(info);
-
-			// update the events in mongodb here
-
-			// console.log(info)
-
-			// prompt the user to enter a title and update the event
-			// update the event instead of adding it
-
-			// let title = prompt('Event Title:');
-			// if (title) {
-			//     ec.addEvent({
-			//         title,
-			//         start: info.start,
-			//         end: info.end,
-			//     });
-			// }
 		},
-		// The eventContent should note the duration, location, and timezone, along with a delete button
 
 		eventContent: function (info) {
-			return info.event.display === 'auto'
-				? {
-						html:
-							'<div class="ec-event-time">' +
-							info.timeText +
-							'</div>' +
-							'<Button class="bg-red-50" >x</Button>' +
-							'<div class="ec-event-title">' +
-							'<b>Location:</b> ' +
-							info.event.title +
-							'</div>'
-				  }
-				: '';
+			if (info.event.display !== 'auto') {
+				return '';
+			}
+			// The eventContent should note the duration, location, and timezone, along with a delete button
+			// Select background color based on the isFree exported variable. Red if busy and green if not busy
+			let locationText = info.event.title ? '<b>Location:</b> ' + info.event.title : '';
+			return {
+				html:
+					'<div class="ec-event-time">' +
+					info.timeText +
+					'</div>' +
+					'<Button class="bg-red-50" >x</Button>' +
+					'<div class="ec-event-title">' +
+					locationText +
+					'</div>'
+			};
 		},
 		eventClick: function (info) {
+			// #TimeBlock #Delete
+			// Delete a block
 			if (info.event.display === 'auto') {
 				let btn = info.el.querySelector('button');
 				if (info.jsEvent.target === btn) {
 					ec.removeEventById(info.event.id);
 				}
 			}
-			// console.log(ec.getEvents())
-			// info.event.title = "def";
-			// ec.addEvent(info.event)
-			// ec.removeEventById(info.event.id)
 
-			let ev = ec.getEvents(); // <-- this is the array of events that we need to update in mongodb, probably on create, if possible?
+			let ev = ec.getEvents();
 
 			console.log(ev);
-
-			// ec.updateEvent(info)
-			// console.log(ec.getEvents())
-
-			// console.log(info)
-			// your event click handler
-			// title = info.event.title
-			// info.el.focus()
-			// info.event.eventContent = info.event.eventContent
 		}
-		// unselect: function (info) {
-		// 	// your unselect handler
-
-		// 	// update the event with new content on unselect??
-		// 	// ec.updateEvent(info)
-		// 	// console.log(info);
-		// 	let ev = ec.getEvents(); // <-- this is the array of events that we need to update in mongodb, probably on create, if possible?
-
-		// 	console.log(ev);
-		// }
-		// eventDrop: function (info) {
-		// 	// your event drop handler
-		// },
-		// eventResize: function (info) {
-		// 	// your event resize handler
-		// }
 	};
 
 	// Array of all the hours in a day as strings in 12 hour (ie. 1am,2am,3am) format
@@ -142,18 +91,9 @@
 
 	hoursFull.push('24:00');
 
-	let values = [7, 23];
+	let values = [8, 17];
 </script>
 
-<!-- <input bind:value={title} type="text" class="
-                    mt-0
-                    block
-                    w-full
-                    px-0.5
-                    border-0 border-b-2 border-gray-200
-                    focus:ring-0 focus:border-black
-                  " placeholder="">
-<h1>Hello {title}!</h1> -->
 <div>
 	<RangeSlider
 		range
@@ -170,23 +110,9 @@
 			ec.setOption('slotMaxTime', hoursFull[values[1]]);
 		}}
 	/>
-	<p>You can also use the above time slider to limit the range of hours displayed!</p>
+	<p>
+		Enter your schedule as (time + location) blocks on the calendar. You can mark a slot as free or
+		busy, whatever's easier.
+	</p>
 	<Calendar bind:this={ec} {plugins} {options} />
 </div>
-
-<!-- <div class="grid grid-cols-2">
-    <div>
-        <input bind:value={title} type="text" class="
-                    mt-0
-                    block
-                    w-full
-                    px-0.5
-                    border-0 border-b-2 border-gray-200
-                    focus:ring-0 focus:border-black
-                  " placeholder="">
-        <h1>Hello {title}!</h1>
-    </div>
-    <div class="">
-        
-    </div>
-</div> -->
