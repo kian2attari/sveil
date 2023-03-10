@@ -13,6 +13,8 @@
 
 	let ec;
 
+	export let isFree;
+
 	function updateEventAfterUnselect(this) {
 		// update the event with new content on unselect
 		ec.updateEvent(this);
@@ -68,6 +70,8 @@
 			// }
 		},
 		// The eventContent should note the duration, location, and timezone, along with a delete button
+		// Select background color based on the isFree exported variable. Red if busy and green if not busy
+		selectBackgroundColor: isFree ? 'green' : 'red',
 
 		eventContent: function (info) {
 			return info.event.display === 'auto'
