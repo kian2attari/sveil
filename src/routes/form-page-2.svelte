@@ -8,7 +8,7 @@
 	// Give a type to onback function
 	export let onBack;
 
-	let isFree = true;
+	let isFree = false;
 
 	const { form, data } = createForm({ onSubmit });
 </script>
@@ -23,10 +23,8 @@
 		</label>
 		<Button type="success" nativeType="submit">Submit</Button>
 	</div>
-	<div class=" items-center px-6 pt-4">
-		<p class="border-t py-3">Drag to mark your availability on the calendar below!</p>
-	</div>
-	<Calendar isBusy />
+
+	<Calendar bind:isFree />
 </form>
 
 <style>
@@ -141,7 +139,7 @@
 	}
 
 	input:checked + .switch-left {
-		background-color: #0084d0;
+		background-color: #54ad56;
 		color: #fff;
 		bottom: 0px;
 		left: 0.5em;
