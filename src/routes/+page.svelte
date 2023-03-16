@@ -30,6 +30,7 @@
 			startTime = 0;
 			pagesState = [];
 
+			// Here we would send the data to our backend
 			// return fetch('https://example.com/', {
 			// 	method: 'POST',
 			// 	headers: { 'Content-Type': 'application/json' },
@@ -58,5 +59,4 @@
 		<h1 class="uppercase text-red-500">sveilability</h1>
 	{/if}
 	<svelte:component this={pages[page]} {onSubmit} {onBack} />
-	<!-- <svelte:component this={pages[page]} {onSubmit} {onBack} initialValues={pagesState[page]} /> -->
 </main>
