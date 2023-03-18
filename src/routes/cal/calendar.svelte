@@ -42,6 +42,7 @@
 			ec.addEvent(info);
 		},
 
+		// #TimeBlock #Location #TimeRange
 		eventContent: function (info) {
 			if (info.event.display !== 'auto') {
 				return '';
@@ -94,6 +95,7 @@
 	let values = [8, 17];
 </script>
 
+<!-- #Blockable time range slider -->
 <div>
 	<RangeSlider
 		range

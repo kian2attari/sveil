@@ -13,9 +13,11 @@
 	const { form, data } = createForm({ onSubmit });
 </script>
 
+<!-- #Form -->
 <form use:form class="w-full my-5">
 	<div class="flex w-full justify-around">
 		<Button type="warning" nativeType="button" on:click={() => onBack($data)}>Back</Button>
+		<!-- #Busy Block/Free Block -->
 		<label class="rocker rocker-small">
 			<input type="checkbox" bind:checked={isFree} />
 			<span class="switch-left">Free</span>
@@ -23,7 +25,7 @@
 		</label>
 		<Button type="success" nativeType="submit">Submit</Button>
 	</div>
-
+	<!-- #Calendar -->
 	<Calendar bind:isFree />
 </form>
 
@@ -47,14 +49,7 @@
 	.rocker {
 		display: inline-block;
 		position: relative;
-		/*
-  SIZE OF SWITCH
-  ==============
-  All sizes are in em - therefore
-  changing the font-size here
-  will change the size of the switch.
-  See .rocker-small below as example.
-  */
+
 		font-size: 2em;
 		font-weight: bold;
 		text-align: center;

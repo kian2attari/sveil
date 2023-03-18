@@ -92,8 +92,10 @@
 	});
 </script>
 
+<!-- #Form interface -->
 <form use:form>
 	<p class="border-b">What is your email?</p>
+	<!-- #Identity (association) email form -->
 	<div class="relative py-4 ">
 		<input
 			id="email"
@@ -107,6 +109,7 @@
 			on:focus={() => startTimerOnFirstFocus()}
 			bind:value={data.email}
 		/>
+		<!-- #Email Suggestions -->
 		{#if dropdownList.length > 0}
 			<ul class="email-suggestions">
 				{#each dropdownList as domain, index}
@@ -120,7 +123,7 @@
 			</ul>
 		{/if}
 	</div>
-
+	<!-- Next button for form -->
 	<Button type="secondary" class="max-w-min" nativeType="submit">Next</Button>
 </form>
 
